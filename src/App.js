@@ -1,12 +1,12 @@
 import React from "react";
-import KeySelector from "./components/KeySelector";
+import ChordsSelector from "./components/ChordsSelector";
 
 class App extends React.Component {
 
   render(){
     return (
       <div className="container mt-4">
-        <KeySelector />
+        <ChordsSelector />
       </div>
     );
   }
