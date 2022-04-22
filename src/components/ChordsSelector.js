@@ -2,8 +2,8 @@ import React from "react";
 import { MajorChordProgressions } from "../data/ChordProgressions";
 
 export default class ChordsSelector extends React.Component{
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state = {
             chords: [],
             progressions: MajorChordProgressions
@@ -12,6 +12,7 @@ export default class ChordsSelector extends React.Component{
         this.filterProgressionsByChord = this.filterProgressionsByChord.bind(this);
         this.setChord = this.setChord.bind(this);
         this.onChordClick = this.onChordClick.bind(this);
+        this.invokeSetSelectedChords = this.invokeSetSelectedChords.bind(this);
     }
 
     /**
@@ -57,7 +58,16 @@ export default class ChordsSelector extends React.Component{
 
         this.setState({
             progressions: filteredProgrssions
-        });
+        }, this.invokeSetSelectedChords);
+    }
+
+    /**
+     * Sets up selected chords state when a single chord progression has been evaluated
+     */
+    invokeSetSelectedChords(){
+        if(this.state.progressions.length === 1){
+            this.props.slectedChordsCallback(this.state.progressions);
+        }
     }
 
     /**
@@ -82,8 +92,8 @@ export default class ChordsSelector extends React.Component{
         
         return (
             <div className="container"> 
-                <h1 className="text-primary"><i class="bi bi-key-fill"></i> In quale chiave?</h1>
-                <p>In base agli accordi presenti nel testo è possibile risalire alla chiave usata e alla progressione degli accordi del brano.</p>
+                <h2><i class="bi bi-sort-alpha-down"></i> Progressione accordi</h2>
+                <p>Seleziona gli accordi per trovare la progressione</p>
                 {this.renderButtons()}
             </div>
         );
